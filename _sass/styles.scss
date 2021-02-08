@@ -7,7 +7,14 @@ body{
   //font-weight: bold;
 }
 .category{
+  .btn-tag{
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+  }
   .active{
-    colr: blue;
+    color: #3271e6;
   }
 }

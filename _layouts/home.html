@@ -24,11 +24,12 @@ layout: default
   </header>
 
   <div class="container">
-    <div class="col-lg-4 col-md-2">
-
-      {% for category in site.categories %}
-      <a class="btn btn-default {% if category[0] == page.category %} active {% endif %}"  href="/category/{{ category | first }}"># {{category | first }} ({{category | last | size}})</a>
-      {% endfor %}
+    <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="row category">
+        {% for category in site.categories %}
+        <a class="btn btn-tag {% if category[0] == page.category %} active {% endif %}"  href="/category/{{ category | first }}" role="button"># {{category | first }} ({{category | last | size}})</a>
+        {% endfor %}
+      </div>
     </div>
 
     <div class="row">

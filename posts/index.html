@@ -3,7 +3,11 @@ layout: page
 title: Posts
 background: '/img/bg-post.jpg'
 ---
-
+<div class="row">
+  {% for category in site.categories %}
+  <a class="btn btn-default {% if category[0] == page.category %} active {% endif %}"  href="/category/{{ category | first }}"># {{category | first }} ({{category | last | size}})</a>
+  {% endfor %}
+</div>
 {% for post in paginator.posts %}
 
 <article class="post-preview">
