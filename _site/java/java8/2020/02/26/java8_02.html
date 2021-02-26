@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    함수형 인터페이스란 무엇인가 - GRYOH
+    
+  </title>
+
+  <meta name="description" content="함수형 인터페이스(Functional Interface) - 함수형 인터페이스란">
+
+  <!--<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>-->
+
+  <!-- 코드블럭 -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/java/java8/2020/02/26/java8_02.html">
+  <link rel="alternate" type="application/rss+xml" title="GRYOH" href="/feed.xml">
+
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">GRYOH</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>-->
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">Posts</a>
+        </li>
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/posts/01.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>함수형 인터페이스란 무엇인가</h1>
+            
+            <h2 class="subheading">함수형 인터페이스는 단 하나의 추상 메소드만이 선언된 인터페이스이다.</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">GRYOH</a>
+              on February 26, 2020 &middot; <span class="reading-time" title="Estimated read time">
+  
+   2 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto postsWrapper">
+
+        <h1 id="함수형-인터페이스functional-interface">함수형 인터페이스(Functional Interface)</h1>
+<p><br /></p>
+<h4 id="--함수형-인터페이스란">- 함수형 인터페이스란</h4>
+
+<blockquote>
+  <p>함수형 인터페이스는 <strong>단 하나의 추상 메소드만</strong>이 선언된 인터페이스이다.</p>
+</blockquote>
+
+<p><strong>SAM</strong>(Single Abstract Method) 인터페이스라고도 한다.</p>
+
+<p><br /></p>
+
+<h4 id="--함수형-인터페이스-특징">- 함수형 인터페이스 특징</h4>
+
+<blockquote>
+  <p>함수형 인터페이스와 람다를 이용하면 구조적으로 유연하고 간결한 코드를 작성할 수 있다.
+인터페이스에 <strong>@FunctionalInterface</strong> 어노테이션을 붙여주면 컴파일에러를 방지할 수 있다.</p>
+</blockquote>
+
+<p><br /></p>
+
+<h4 id="--함수형-인터페이스-사용예시">- 함수형 인터페이스 사용예시</h4>
+<h5 id="예시-1">예시 1)</h5>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">WelcomeSomething</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">);</span> <span class="c1">// 추상메소드</span>
+
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printName</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"GRYOH"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<h5 id="예시2">예시2)</h5>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">WelcomeSomething</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">);</span> <span class="c1">// 추상메소드</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><strong>예시1</strong>과 같이 일반 메소드는 작성 가능하다</p>
+
+<p><strong>예시1</strong>과 <strong>예시2</strong> 방법 모두 가능하지만 <strong>예시2</strong>를 권고한다.</p>
+
+<p>(@FunctionalInterface 어노테이션 추가 후 추상메소드 추가하면 컴파일 에러 발생하는 것을 확인 할 수 있다)</p>
+
+<p><br /></p>
+
+<h5 id="예시-3">예시 3)</h5>
+<p>함수형 인터페이스가 아니다 -&gt; 추상메소드는 <strong>한 개만</strong> 존재해야한다</p>
+
+<p>컴파일 에러는 발생하지 않지만 함수형 인터페이스를 사용하는 쪽에서 multiple non-overriding abstract methods found in interface xxx 컴파일 에러 발생</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">WelcomeSomething</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">);</span>  <span class="c1">// 추상메소드1</span>
+    <span class="kt">void</span> <span class="nf">doit</span><span class="o">();</span>	            <span class="c1">// 추상메소드2</span>
+    <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printName</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"GRYOH"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">WelcomeSomething</span> <span class="n">welcomeSomething3</span> <span class="o">=</span> <span class="o">(</span><span class="n">name</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="k">return</span> <span class="n">name</span><span class="o">;</span> <span class="o">};</span> <span class="c1">//컴파일 에러</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<p><br /></p>
+
+<p><a href="/java/java8/2020/02/26/java8_03.html">람다 표현식 공부하러 가기</a></p>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/java/java8/2020/02/17/java8_01.html" data-toggle="tooltip" data-placement="top" title="Java8">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/java/java8/2020/02/26/java8_03.html" data-toggle="tooltip" data-placement="top" title="람다 표현식이란 무엇인가">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:hungry6459@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/gryoh">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; GRYOH 2021</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX-X');
+</script>
+
+
+
+</body>
+
+</html>

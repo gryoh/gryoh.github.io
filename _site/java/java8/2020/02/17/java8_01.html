@@ -8,22 +8,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>
-    안녕하세요 - GRYOH
+    Java8 - GRYOH
     
   </title>
 
-  <meta name="description" content="#첫번째 글입니다">
+  <meta name="description" content="Java8 현재 자바8 버전은 출시(2014/03/18) 이후로 개발자들이 가장 많이 사용하는 버전이다.">
 
   <!--<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>-->
 
+  <!-- 코드블럭 -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- -->
 
   <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
 
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://localhost:4000/git/2020/02/08/test.html">
+  <link rel="canonical" href="http://localhost:4000/java/java8/2020/02/17/java8_01.html">
   <link rel="alternate" type="application/rss+xml" title="GRYOH" href="/feed.xml">
 
 </head>
@@ -68,13 +73,13 @@
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
           <div class="post-heading">
-            <h1>안녕하세요</h1>
+            <h1>Java8</h1>
             
-            <h2 class="subheading">안녕하세요 첫번째 글입니다</h2>
+            <h2 class="subheading">자바8에 대해 알아보자</h2>
             
             <span class="meta">Posted by
               <a href="#">GRYOH</a>
-              on February 08, 2020 &middot; <span class="reading-time" title="Estimated read time">
+              on February 17, 2020 &middot; <span class="reading-time" title="Estimated read time">
   
    1 min  read </span>
 
@@ -87,23 +92,33 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto">
+      <div class="col-lg-8 col-md-10 mx-auto postsWrapper">
 
-        <p>#첫번째 글입니다</p>
+        <h1 id="java8">Java8</h1>
+<p>현재 자바8 버전은 <a href="https://www.java.com/ko/download/help/release_dates.html">출시</a>(2014/03/18) 이후로 개발자들이 가장 많이 사용하는 버전이다.</p>
 
-<p>##첫번째 글입니다</p>
+<p><img data-action="zoom" src="/img/posts/javaversion_use_graph.png" alt="자바 버전 사용률 jetbrain참조" style="width: 70%; display: block; margin: 0 auto;" onclick="javascript:location.href='https://www.jetbrains.com/lp/devecosystem-2020/java/'" /></p>
 
-<p>###첫번째 글입니다</p>
+<p>자바8은 절감된 상용 코드(boilerplate code), 향상된 콜렉션 및 주석, 더 단순화된 병렬 프로그램 모델 및 모뎀, 멀티코어프로세서의 효율적인 사용 구현을 통해 개발자의 생산성 및 주요한 애플리케이션 성능을 강화해준다.</p>
 
-<p>####첫번째 글입니다</p>
+<p>자바8의 주요 기능은 아래와 같이 다양하다.</p>
+<ul>
+  <li>람다 표현식 (Lambda expression) - 함수형 프로그래밍이 가능하게 됨</li>
+  <li>스트림 API (Stream API) - 데이터를 추상화하여 다룰 수 있게 됨</li>
+  <li>java.time 패키지 - 더 직관적이고 개선된 Date, Time API를 제공</li>
+  <li>Default Method - 구현 클래스에서 인터페이스를 구현하지 않아도 된다</li>
+  <li>Optional - NullPointerException을 막는다</li>
+  <li>나즈혼(Nashorn) - 자바스크립트 엔진</li>
+  <li>…</li>
+</ul>
 
-<p>#####첫번째 글입니다</p>
-
-<p>######첫번째 글입니다</p>
-
-<p>#######첫번째 글입니다</p>
+<p>자바8에 주요기능은 다양하지만 그중에 나는 람다표현식, 스트림, Optional을 주로 사용 중이다. 하지만 기초없이 사용하다 보니 사용할 때마다 개발리소스가 많이 허비 되는거 같아서 정리를 해보기로 했다.</p>
 
 <hr />
+
+<p><br /></p>
+
+<p><a href="/java/java8/2020/02/26/java8_02.html">함수형 인터페이스 공부하러 가기</a></p>
 
 
         <hr>
@@ -111,9 +126,9 @@
         <div class="clearfix">
 
           
-          <a class="btn btn-primary float-left" href="/2020/02/08/git-blog_01.html" data-toggle="tooltip" data-placement="top" title="Git Blog_01">&larr; Previous<span class="d-none d-md-inline">
-              Post</span></a>
           
+          <a class="btn btn-primary float-right" href="/java/java8/2020/02/26/java8_02.html" data-toggle="tooltip" data-placement="top" title="함수형 인터페이스란 무엇인가">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
           
 
         </div>

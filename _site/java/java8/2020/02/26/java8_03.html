@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    람다 표현식이란 무엇인가 - GRYOH
+    
+  </title>
+
+  <meta name="description" content="람다 표현식(Lambda Expressions)">
+
+  <!--<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>-->
+
+  <!-- 코드블럭 -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/java/java8/2020/02/26/java8_03.html">
+  <link rel="alternate" type="application/rss+xml" title="GRYOH" href="/feed.xml">
+
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">GRYOH</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>-->
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">Posts</a>
+        </li>
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/posts/01.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>람다 표현식이란 무엇인가</h1>
+            
+            <h2 class="subheading">람다 표현식으로 무엇을 할 수 있을</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">GRYOH</a>
+              on February 26, 2020 &middot; <span class="reading-time" title="Estimated read time">
+  
+   3 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto postsWrapper">
+
+        <h1 id="람다-표현식lambda-expressions">람다 표현식(Lambda Expressions)</h1>
+
+<p>함수형 프로그래밍을 하기 위해선 람다 표현식을 알아야 좋다. 람다 함수가 뭔지 알아보자</p>
+
+<p>람다함수란 프로그래밍 언어에서 사용되는 개념으로 <strong>익명 함수(Anonymous functions)</strong>를 지칭하는 용어이다.</p>
+
+<p>현재 사용되고 있는 람다의 근간은 수학과 기초 컴퓨터과학 분야에서의 람다 대수이고
+람다 대수는 간단히 말하자면 수학에서 사용하는 함수를 보다 <strong>단순하게 표현하는 방법</strong>이다.</p>
+
+<p><br /></p>
+
+<h4 id="람다-함수란">람다 함수란</h4>
+<blockquote>
+  <p>람다 함수는 프로그래밍 언어에서 사용되는 개념으로 <strong>익명 함수(Anonymous functions)</strong>를 지칭하는 용어이다.</p>
+</blockquote>
+
+<p><br /></p>
+
+<h4 id="람다-함수의-장단점">람다 함수의 장단점</h4>
+<ul>
+  <li>장점
+    <ul>
+      <li>숙련만 된다면 코드를 간결하게 줄일 수 있다.</li>
+      <li>멀티스레드를 활용하여 병렬처리를 할 수 있다.</li>
+      <li>사이드 이팩트가 없다. -&gt; 함수 밖에 있는 값을 변경할 수 없다.</li>
+    </ul>
+  </li>
+  <li>단점
+    <ul>
+      <li>너무 많은 코드를 생략하다보니 가독성이 떨어질 수 있다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="이전에-람다-표현법을-사용하지-않을-때">이전에 람다 표현법을 사용하지 않을 때</h4>
+
+<p><strong>익명 내부 클래스</strong>를 사용하여 작성</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static void main(String[] args) {
+    WelcomeSomething welcomeSomething = new WelcomeSomething() {
+        @Override
+        public String hello(String name) {
+            return name + "님";
+        }
+    };
+    System.out.println(welcomeSomething.hello("GRYOH") + " Welcome");
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="람다-표현식-표현법">람다 표현식 표현법</h4>
+
+<p>람다식은 <strong>매개변수 + 실행문</strong>으로 구성되어 있다</p>
+
+<p>모양은 () -&gt; {} //매개변수 : () , 실행문 : {}</p>
+
+<p>첫 괄호에 인터페이스의 매개변수<strong>()</strong>를 입력하고 <strong>-&gt;</strong> 를 입력하고 <strong>{}</strong>안에 실행할 코드를 작성하면 된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">WelcomeSomething</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">WelcomeDefaultSomething</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">hello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>사용법1)
+    <ul>
+      <li>기본 사용법 : (매개변수 타입) -&gt; {실행문}
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WelcomeSomething welcomeSomething = (String name) -&gt; { return name + "님"; };
+System.out.println(welcomeSomething.printName("GRY") + " Welcome");
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>사용법2)
+    <ul>
+      <li>매개변수 타입 생략 : (매개변수) -&gt; {실행문}
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WelcomeSomething welcomeSomething = (name) -&gt; { return name + "님"; };
+System.out.println(welcomeSomething.printName("GRY") + " Welcome");
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>사용법3)
+    <ul>
+      <li>매개변수 없는 경우 : () -&gt; {실행문}</li>
+      <li>매개변수가 하나일 경우 매개변수를 생략 할 수 있다
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WelcomeDefaultSomething welcomeDefaultSomething = () -&gt; {
+  System.out.println("임시회원님 Welcome");
+};
+welcomeDefaultSomething.hello();
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>사용법4)
+    <ul>
+      <li>중괄호 생략 : () -&gt; 실행문</li>
+      <li>함수몸체가 단일 실행문이면 괄호{}를 생략 할 수 있다</li>
+      <li>함수몸체가 return문으로만 구성되어 있는 경우 괄호{}를 생략 할 수 없습니다.
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WelcomeDefaultSomething welcomeDefaultSomething = () -&gt; System.out.println("임시회원님 Welcome");
+welcomeDefaultSomething.hello();
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+  <li>사용법5)
+    <ul>
+      <li>매개변수 괄호 생략 : 매개변수 -&gt; 실행문
+        <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>WelcomeSomething welcomeSomething = name -&gt; name + "님";
+System.out.println(welcomeSomething.hello("GRYOH") + " Welcome");
+</code></pre></div>        </div>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>익명 내부 클래스로 작성했던 코드보다 훨씬 간결해졌다</p>
+</blockquote>
+
+<hr />
+
+<p><br /></p>
+
+<p><a href="/java/java8/2020/02/26/java8_04.html">Stream API 공부하러가기</a></p>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/java/java8/2020/02/26/java8_02.html" data-toggle="tooltip" data-placement="top" title="함수형 인터페이스란 무엇인가">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:hungry6459@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/gryoh">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; GRYOH 2021</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX-X');
+</script>
+
+
+
+</body>
+
+</html>
