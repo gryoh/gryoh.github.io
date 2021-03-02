@@ -75,13 +75,13 @@
           <div class="post-heading">
             <h1>람다 표현식이란 무엇인가</h1>
             
-            <h2 class="subheading">람다 표현식으로 무엇을 할 수 있을</h2>
+            <h2 class="subheading">람다 표현식으로 무엇을 할 수 있을까</h2>
             
             <span class="meta">Posted by
               <a href="#">GRYOH</a>
               on February 26, 2020 &middot; <span class="reading-time" title="Estimated read time">
   
-   3 mins  read </span>
+   8 mins  read </span>
 
             </span>
           </div>
@@ -132,16 +132,27 @@
 
 <h4 id="이전에-람다-표현법을-사용하지-않을-때">이전에 람다 표현법을 사용하지 않을 때</h4>
 
-<p><strong>익명 내부 클래스</strong>를 사용하여 작성</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static void main(String[] args) {
-    WelcomeSomething welcomeSomething = new WelcomeSomething() {
-        @Override
-        public String hello(String name) {
-            return name + "님";
-        }
-    };
-    System.out.println(welcomeSomething.hello("GRYOH") + " Welcome");
-}
+<p>1) 내부/로컬클래스</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">TestClass</span> <span class="o">{</span>
+    <span class="kd">class</span> <span class="nc">LocalClass</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"님"</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>2)
+익명클래스</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">WelcomeSomething</span> <span class="n">welcomeSomething</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WelcomeSomething</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="nc">String</span> <span class="nf">hello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">name</span> <span class="o">+</span> <span class="s">"님"</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">welcomeSomething</span><span class="o">.</span><span class="na">hello</span><span class="o">(</span><span class="s">"GRYOH"</span><span class="o">)</span> <span class="o">+</span> <span class="s">" Welcome"</span><span class="o">);</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
 <p><br /></p>
@@ -221,6 +232,105 @@ System.out.println(welcomeSomething.hello("GRYOH") + " Welcome");
 <blockquote>
   <p>익명 내부 클래스로 작성했던 코드보다 훨씬 간결해졌다</p>
 </blockquote>
+
+<p><br /></p>
+
+<h4 id="내부클래스-vs-람다">내부클래스 vs 람다</h4>
+
+<p>공통점</p>
+<ul>
+  <li>바깥 클래스의 변수나 메서드에 접근할 수 있다.</li>
+</ul>
+
+<p><br /></p>
+
+<p>차이점</p>
+
+<p>1.내부클래스와 람다에서의 this는 다른 의미이다.</p>
+
+<p>내부클래스의 this는 자기 자신을 의미하지만 람다에서의 this는 선언된 클래스를 의미한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">num1</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>   
+<span class="c1">// 변수값 변경이 없기 때문에 사실상 final이고 final키워드 생략이 가능하다. (컴파일러가 추론가능)</span>
+
+<span class="c1">// 내부클래스(로컬클래스)</span>
+<span class="kd">class</span> <span class="nc">TestClass</span> <span class="o">{</span>
+    <span class="kd">class</span> <span class="nc">InnerClass</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">num2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">printNum</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">num1</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>  <span class="c1">// 컴파일 에러 - 현재 this는 InnerClass임</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">num2</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+            <span class="k">return</span> <span class="n">number</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// 익명클래스</span>
+<span class="nc">NumberClass</span> <span class="n">nc</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NumberClass</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">num2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">printNum</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">num1</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>      <span class="c1">// 컴파일 에러-현재 this는 NumberClass임 </span>
+        <span class="k">this</span><span class="o">.</span><span class="na">num2</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">number</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">};</span>
+
+<span class="c1">//람다 표현식</span>
+<span class="nc">NumberClass</span> <span class="n">nc2</span> <span class="o">=</span> <span class="n">number</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">num1</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>           <span class="c1">// 컴파일 에러 - shadowing 불가</span>
+    <span class="kt">int</span> <span class="n">num2</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="k">return</span> <span class="n">number</span><span class="o">;</span>
+<span class="o">};</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>2.람다는 <strong>은닉변수(Shadow Variable)</strong>를 허용하지 않는다.(shadowing 불가)</p>
+
+<p>내부클래스는 재정의한 변수를 덮을 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">baseNumber</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>    <span class="c1">// 사실상 final 변수 (effective final)</span>
+
+<span class="kd">class</span> <span class="nc">InnerClass</span> <span class="o">{</span>
+    <span class="kd">class</span> <span class="nc">LocalClass</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">baseNumber</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>    <span class="c1">// shadowing 된 변수</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">printNum</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">number</span> <span class="o">+</span> <span class="n">baseNumber</span><span class="o">;</span>         <span class="c1">// baseNumber =&gt; 20</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="nc">NumberClass</span> <span class="n">ncAnonymousClass</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NumberClass</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">baseNumber</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>    <span class="c1">// shadowing 된 변수</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">printNum</span><span class="o">(</span><span class="kt">int</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">number</span> <span class="o">+</span> <span class="n">baseNumber</span><span class="o">;</span>             <span class="c1">// baseNumber =&gt; 20</span>
+    <span class="o">}</span>
+<span class="o">};</span>
+
+<span class="nc">NumberClass</span> <span class="n">ncLambda</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="n">baseNumber</span><span class="o">;</span>                      <span class="c1">// baseNumber =&gt; 10 (1)</span>
+<span class="o">};</span> 
+
+<span class="n">baseNumber</span><span class="o">++;</span>   <span class="c1">// 사실상 final 이기 때문에 값을 변경하면 (1)람다표현식에서 컴파일 에러가 발생한다</span>
+<span class="c1">// variable used in lambda expression should be final or effectively final 에러 발생</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>3.람다는 <strong>단일 추상함수 인터페이스</strong>만 사용할 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Greeting</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">hello</span><span class="o">();</span>
+    <span class="kt">void</span> <span class="nf">hi</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//multiple non-overriding abstract methods found in interface 에러발생</span>
+    <span class="nc">Greeting</span> <span class="n">greeting</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"안녕"</span><span class="o">);</span> <span class="c1">//컴파일 에러발생</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
 <hr />
 
