@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
 
   <link rel="stylesheet" href="/assets/main.css">
-  <link rel="canonical" href="http://localhost:4000/java/2021/03/20/java8_05.html">
+  <link rel="canonical" href="http://localhost:4000/java/2021/03/20/java8_06.html">
   <link rel="alternate" type="application/rss+xml" title="GRYOH" href="/feed.xml">
 
 </head>
@@ -81,7 +81,7 @@
               <a href="#">GRYOH</a>
               on March 20, 2021 &middot; <span class="reading-time" title="Estimated read time">
   
-   14 mins  read </span>
+   8 mins  read </span>
 
             </span>
           </div>
@@ -101,13 +101,9 @@
 <p><br /></p>
 
 <h3 id="predicatet">Predicate&lt;T&gt;</h3>
-<blockquote>
-  <p><strong>Predicate</strong> Interface는 T에대한 조건에 대해서 <strong>boolean</strong>을 반환하는 Fucntional Interface이다.</p>
-
-  <p><strong>Predicate&lt;T&gt;</strong>로 사용되며 T는 파라미터이다</p>
-
-  <p>해당 파라미터에 대해서 <strong>true / false를 return</strong> 할 수 있도록 작성해주면 된다.</p>
-</blockquote>
+<ul>
+  <li>T 타입을 받아서 boolean을 리턴하는 함수 인터페이스</li>
+</ul>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
 
@@ -160,6 +156,8 @@ false
 <span class="nc">Predicate</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">justOdd</span> <span class="o">=</span> <span class="n">num</span> <span class="o">-&gt;</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">;</span>
 <span class="nc">Predicate</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">justEven</span> <span class="o">=</span> <span class="n">num</span> <span class="o">-&gt;</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">;</span>
 
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"justTwo.test(1) = "</span> <span class="o">+</span> <span class="n">justTwo</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"justTwo.test(2) = "</span> <span class="o">+</span> <span class="n">justTwo</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
 <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"justTwo.and(justOdd).test(1) = "</span> <span class="o">+</span> <span class="n">justTwo</span><span class="o">.</span><span class="na">and</span><span class="o">(</span><span class="n">justOdd</span><span class="o">).</span><span class="na">test</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
 <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"justTwo.and(justEven).test(2) = "</span> <span class="o">+</span> <span class="n">justTwo</span><span class="o">.</span><span class="na">and</span><span class="o">(</span><span class="n">justEven</span><span class="o">).</span><span class="na">test</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
 <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"justTwo.or(justOdd).test(1) = "</span> <span class="o">+</span> <span class="n">justTwo</span><span class="o">.</span><span class="na">or</span><span class="o">(</span><span class="n">justOdd</span><span class="o">).</span><span class="na">test</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
@@ -167,7 +165,9 @@ false
 <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"justTwo.negate().test(1) = "</span> <span class="o">+</span> <span class="n">justTwo</span><span class="o">.</span><span class="na">negate</span><span class="o">().</span><span class="na">test</span><span class="o">(</span><span class="mi">1</span><span class="o">));</span>
 <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"justTwo.negate().test(2) = "</span> <span class="o">+</span> <span class="n">justTwo</span><span class="o">.</span><span class="na">negate</span><span class="o">().</span><span class="na">test</span><span class="o">(</span><span class="mi">2</span><span class="o">));</span>
 </code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>justTwo.and(justOdd).test(1) = false
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>justTwo.test(1) = false
+justTwo.test(2) = true
+justTwo.and(justOdd).test(1) = false
 justTwo.and(justEven).test(2) = true
 justTwo.or(justOdd).test(1) = true
 justTwo.or(justEven).test(2) = true
@@ -204,90 +204,12 @@ justTwo.negate().test(2) = false
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>filtered Num = [1]
 </code></pre></div></div>
 
-<p><br /></p>
-
 <h3 id="operator">Operator</h3>
 
 <ul>
-  <li>UnaryOperator</li>
+  <li>UnaryOperator
+UnaryOperator은 입력받은 파라미터 타입과 리턴 받는 타입이 동일한 Functional Interface입니다.</li>
 </ul>
-
-<blockquote>
-  <p><strong>UnaryOperator</strong>은 입력받은 파라미터 타입과 리턴 받는 타입이 동일한 Functional Interface입니다.</p>
-
-  <p><strong>UnaryOperator</strong>는 Functional Interface를 <strong>확장</strong>하였습니다.</p>
-
-  <p>Function Interface는 T -&gt; R 이며, UnaryOperator는 T -&gt; T 입니다.</p>
-</blockquote>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
-
-<span class="nd">@FunctionalInterface</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">UnaryOperator</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="nc">Function</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nc">UnaryOperator</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">identity</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p>UnaryOperator는 우리가 많이 사용하는 <strong>ArrayList</strong>의 메서드중 하나에서 찾아 볼 수 있다.</p>
-
-<p><strong>replaceAll</strong> 이라는 메서드이다.</p>
-
-<p>해당 메서드는 ArrayList의 elements들을 일괄로 특정 식을 통해서 병경하는 메서드 이다.</p>
-
-<p>아래는 해당 메서드의 내부 구조이다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
- * Replaces each element of this list with the result of applying the
- * operator to that element.  Errors or runtime exceptions thrown by
- * the operator are relayed to the caller.
- *
- * @implSpec
- * The default implementation is equivalent to, for this {@code list}:
- * &lt;pre&gt;{@code
- *     final ListIterator&lt;E&gt; li = list.listIterator();
- *     while (li.hasNext()) {
- *         li.set(operator.apply(li.next()));
- *     }
- * }&lt;/pre&gt;
- *
- * If the list's list-iterator does not support the {@code set} operation
- * then an {@code UnsupportedOperationException} will be thrown when
- * replacing the first element.
- *
- * @param operator the operator to apply to each element
- * @throws UnsupportedOperationException if this list is unmodifiable.
- *         Implementations may throw this exception if an element
- *         cannot be replaced or if, in general, modification is not
- *         supported
- * @throws NullPointerException if the specified operator is null or
- *         if the operator result is a null value and this list does
- *         not permit null elements
- *         (&lt;a href="Collection.html#optional-restrictions"&gt;optional&lt;/a&gt;)
- * @since 1.8
- */</span>
-<span class="k">default</span> <span class="kt">void</span> <span class="nf">replaceAll</span><span class="o">(</span><span class="nc">UnaryOperator</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">operator</span><span class="o">)</span> <span class="o">{</span>
-    <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">operator</span><span class="o">);</span>
-    <span class="kd">final</span> <span class="nc">ListIterator</span><span class="o">&lt;</span><span class="no">E</span><span class="o">&gt;</span> <span class="n">li</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">listIterator</span><span class="o">();</span>
-    <span class="k">while</span> <span class="o">(</span><span class="n">li</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
-        <span class="n">li</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">operator</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">li</span><span class="o">.</span><span class="na">next</span><span class="o">()));</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p><br /></p>
-
-<p>사용예제)</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">nameList</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"jave"</span><span class="o">,</span> <span class="s">"jave8"</span><span class="o">,</span> <span class="s">"spring"</span><span class="o">,</span> <span class="s">"stream"</span><span class="o">);</span>
-<span class="nc">UnaryOperator</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">unaryOperator</span> <span class="o">=</span> <span class="n">s</span> <span class="o">-&gt;</span> <span class="n">s</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">"jave"</span><span class="o">,</span> <span class="s">"java"</span><span class="o">);</span>
-<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"unaryOperator 전 nameList = "</span> <span class="o">+</span> <span class="n">nameList</span><span class="o">);</span>
-<span class="n">nameList</span><span class="o">.</span><span class="na">replaceAll</span><span class="o">(</span><span class="n">unaryOperator</span><span class="o">);</span>
-<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"unaryOperator 후 nameList = "</span> <span class="o">+</span> <span class="n">nameList</span><span class="o">);</span>
-</code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unaryOperator 전 nameList = [jave, jave8, spring, stream]
-unaryOperator 후 nameList = [java, java8, spring, stream]
-</code></pre></div></div>
 
 <p><br /></p>
 
@@ -295,101 +217,7 @@ unaryOperator 후 nameList = [java, java8, spring, stream]
   <li>BinaryOperator</li>
 </ul>
 
-<blockquote>
-  <p><strong>BinaryOperator</strong>는 2개의 동일한 타입의 파라미터로 1개의 동일한 리턴 값을 가져오는 Functional Interface이다.</p>
-
-  <p><strong>BinaryOperator</strong>는 BiFunction Interface를 확장한 Interface로 (T, U) -&gt; R을 응용하여 (T, T) -&gt; T로 이용한다.</p>
-</blockquote>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.Comparator</span><span class="o">;</span>
-
-<span class="nd">@FunctionalInterface</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BinaryOperator</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="nc">BiFunction</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span><span class="no">T</span><span class="o">,</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
-   
-    <span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nc">BinaryOperator</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">minBy</span><span class="o">(</span><span class="nc">Comparator</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">comparator</span><span class="o">)</span> <span class="o">{</span>
-        <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">comparator</span><span class="o">);</span>
-        <span class="k">return</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">comparator</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">a</span> <span class="o">:</span> <span class="n">b</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nc">BinaryOperator</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">maxBy</span><span class="o">(</span><span class="nc">Comparator</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">comparator</span><span class="o">)</span> <span class="o">{</span>
-        <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">comparator</span><span class="o">);</span>
-        <span class="k">return</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">comparator</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">a</span> <span class="o">:</span> <span class="n">b</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p><br />
-<strong>BinaryOperator</strong>는 stream에서 대표적으로 <strong>reduce</strong>에서 사용된다.
-<strong>reduce</strong> 내부 로직은 다음과 같다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
- * Performs a &lt;a href="package-summary.html#Reduction"&gt;reduction&lt;/a&gt; on the
- * elements of this stream, using an
- * &lt;a href="package-summary.html#Associativity"&gt;associative&lt;/a&gt; accumulation
- * function, and returns an {@code Optional} describing the reduced value,
- * if any. This is equivalent to:
- * &lt;pre&gt;{@code
- *     boolean foundAny = false;
- *     T result = null;
- *     for (T element : this stream) {
- *         if (!foundAny) {
- *             foundAny = true;
- *             result = element;
- *         }
- *         else
- *             result = accumulator.apply(result, element);
- *     }
- *     return foundAny ? Optional.of(result) : Optional.empty();
- * }&lt;/pre&gt;
- *
- * but is not constrained to execute sequentially.
- *
- * &lt;p&gt;The {@code accumulator} function must be an
- * &lt;a href="package-summary.html#Associativity"&gt;associative&lt;/a&gt; function.
- *
- * &lt;p&gt;This is a &lt;a href="package-summary.html#StreamOps"&gt;terminal
- * operation&lt;/a&gt;.
- *
- * @param accumulator an &lt;a href="package-summary.html#Associativity"&gt;associative&lt;/a&gt;,
- *                    &lt;a href="package-summary.html#NonInterference"&gt;non-interfering&lt;/a&gt;,
- *                    &lt;a href="package-summary.html#Statelessness"&gt;stateless&lt;/a&gt;
- *                    function for combining two values
- * @return an {@link Optional} describing the result of the reduction
- * @throws NullPointerException if the result of the reduction is null
- * @see #reduce(Object, BinaryOperator)
- * @see #min(Comparator)
- * @see #max(Comparator)
- */</span>
-<span class="nc">Optional</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">reduce</span><span class="o">(</span><span class="nc">BinaryOperator</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">accumulator</span><span class="o">);</span>
-</code></pre></div></div>
-
 <p><br /></p>
-
-<p><strong>reduce</strong>는 Stream의 elements들이 중첩하여 결과를 만드는 메서드이다. 
-즉 1,2,3 이라는 요소가 있고 이를 <strong>reduce</strong>로 더하면 (1 + 2), (3[1 + 2의 결과] + 3)로 결국 6의 결과를 내놓는다.</p>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">BinaryOperator</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">binaryOperator</span> <span class="o">=</span> <span class="o">(</span><span class="n">total</span><span class="o">,</span> <span class="n">num</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
-    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"total:"</span> <span class="o">+</span> <span class="n">total</span> <span class="o">+</span> <span class="s">", num:"</span> <span class="o">+</span> <span class="n">num</span><span class="o">);</span>
-    <span class="k">return</span> <span class="n">total</span> <span class="o">+</span> <span class="n">num</span><span class="o">;</span>
-<span class="o">};</span>
-<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">integerStream</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
-<span class="nc">Optional</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">reduce</span> <span class="o">=</span> <span class="n">integerStream</span><span class="o">.</span><span class="na">reduce</span><span class="o">(</span><span class="n">binaryOperator</span><span class="o">);</span>
-<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"reduce = "</span> <span class="o">+</span> <span class="n">reduce</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
-</code></pre></div></div>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>total:1, num:2
-total:3, num:3
-total:6, num:4
-total:10, num:5
-reduce = 15
-</code></pre></div></div>
-
-<p><br /></p>
-
-<hr />
-<p>그동안 정리한걸 토대로 표로 만들어보았다.</p>
 
 <table>
   <thead>
@@ -402,12 +230,6 @@ reduce = 15
   </thead>
   <tbody>
     <tr>
-      <td>Function</td>
-      <td>O</td>
-      <td>O</td>
-      <td>주로 매개변수를 반환값 타입으로 변환 후 반환</td>
-    </tr>
-    <tr>
       <td>Consumer</td>
       <td>O</td>
       <td>X</td>
@@ -415,15 +237,15 @@ reduce = 15
     </tr>
     <tr>
       <td>Supplier</td>
-      <td>X</td>
+      <td>O</td>
       <td>O</td>
       <td> </td>
     </tr>
     <tr>
-      <td>Predicate</td>
+      <td>Function</td>
       <td>O</td>
       <td>O</td>
-      <td>주로 매개변수를 조사한 후 논리값 반환 역할</td>
+      <td>주로 매개변수를 반환값 타입으로 변환 후 반환</td>
     </tr>
     <tr>
       <td>Operator</td>
@@ -431,24 +253,109 @@ reduce = 15
       <td>O</td>
       <td>주로 매개변수를 연산 후 결과값 반환 역할</td>
     </tr>
+    <tr>
+      <td>Predicate</td>
+      <td>O</td>
+      <td>O</td>
+      <td>주로 매개변수를 조사한 후 논리값 반환 역할</td>
+    </tr>
   </tbody>
 </table>
 
-<p><br /></p>
+<ol>
+  <li>
+    <p>Consumer : 매개변수O, 반환값X -&gt; 추상메소드 제공.</p>
+  </li>
+  <li>
+    <p>Supplier : 매개변수X, 반환값O</p>
+  </li>
+  <li>
+    <p>Function : 매개변수O, 반환값O, 주로 매개변수를 반환값 타입으로 변환 후 반환</p>
+  </li>
+  <li>
+    <p>Operator : 매개변수O, 반환값O, 주로 매개변수를 연산 후 결과값 반환 역할</p>
+  </li>
+  <li>
+    <p>Predicate : 매개변수O, 반환값O, 주로 매개변수를 조사한 후 논리값 반환 역할</p>
+  </li>
+</ol>
+
+<table>
+  <thead>
+  <tr>
+    <th scope="cols" width="20%" style="text-align: center;">종류</th>
+    <th scope="cols" width="60%" style="text-align: center;">함수적 인터페이스</th>
+    <th scope="cols" width="10%" style="text-align: center;">andThen()</th>
+    <th scope="cols" width="10%" style="text-align: center;">compose()</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td scope="row" rowspan="2">Function</td>
+    <td style="text-align: left;">Function</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">O</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">BiFunction</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">X</td>
+  </tr>
+  <tr>
+    <td scope="row" rowspan="5">Consumer</td>
+    <td style="text-align: left;">Consumer</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">X</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">BiConsumer</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">X</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">DoubleConsumer</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">X</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">IntConsumer</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">X</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">LongConsumer</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">X</td>
+  </tr>
+  <tr>
+    <td scope="row" rowspan="4">Operator</td>
+    <td style="text-align: left;">BinaryOperator</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">X</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">DoubleUnaryOperator</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">O</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">IntUnaryOperator</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">O</td>
+  </tr>
+  <tr>
+    <td style="text-align: left;">LongUnaryOperator</td>
+    <td style="text-align: center;">O</td>
+    <td style="text-align: center;">O</td>
+  </tr>
+  </tbody>
+</table>
 
 <hr />
 
-<p>이로써 Function, Consumer, Supplier, Predicate, Operator에 관해 모두 알아보았다.</p>
+<p><br /></p>
 
-<p>이번 포스팅을 통해 사용방법을 알아보는 것도 좋았지만 내부로직까지 알아보면서 더 깊이있게 알게 되었다.</p>
-
-<!--
-
----
-<br>
-
-[Stream API 공부하러가기](/java/java8/2021/03/20/java8_06.html) 
--->
+<p><a href="/java/java8/2021/03/20/java8_04.html">Stream API 공부하러가기</a></p>
 
 
         <hr>
@@ -456,12 +363,9 @@ reduce = 15
         <div class="clearfix">
 
           
-          <a class="btn btn-primary float-left" href="/java/2021/03/20/java8_04.html" data-toggle="tooltip" data-placement="top" title="함수형 인터페이스 종류(1)">&larr; Previous<span class="d-none d-md-inline">
+          <a class="btn btn-primary float-left" href="/java/2021/03/20/java8_05.html" data-toggle="tooltip" data-placement="top" title="함수형 인터페이스 종류(2)">&larr; Previous<span class="d-none d-md-inline">
               Post</span></a>
           
-          
-          <a class="btn btn-primary float-right" href="/java/2021/03/20/java8_06.html" data-toggle="tooltip" data-placement="top" title="함수형 인터페이스 종류(2)">Next<span class="d-none d-md-inline">
-              Post</span> &rarr;</a>
           
 
         </div>

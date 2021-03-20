@@ -125,9 +125,11 @@
 
 <h4 id="functiont-r">Function&lt;T, R&gt;</h4>
 
-<ul>
-  <li>T 타입을 받아서 R 타입을 리턴하는 함수 인터페이스</li>
-</ul>
+<blockquote>
+  <p><strong>Function</strong>은 1개의 파라미터를 받아서 1개의 결과를 반환하는 Funtional Interface이다</p>
+
+  <p><strong>Function&lt;T, R&gt;</strong>로 사용할 수 있으며 T 타입을 받아서 R 타입을 리턴하는 한다.</p>
+</blockquote>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package java.util.function;
 
@@ -201,7 +203,7 @@ public interface Function&lt;T, R&gt; {
 
 <p><br /></p>
 
-<p>Function의 경우는 일반적으로 많이 사용하는 stream에 <strong>map</strong>에 해당한다.</p>
+<p><strong>Function</strong>의 경우는 일반적으로 많이 사용하는 stream에 <strong>map</strong>에 해당한다.</p>
 
 <p>map의 내부로직은 다음과 같다.</p>
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
@@ -231,10 +233,12 @@ public interface Function&lt;T, R&gt; {
 <p><br /></p>
 
 <h3 id="bifunctiont-u-r">BiFunction&lt;T, U, R&gt;</h3>
-<ul>
-  <li>두 개의 값(T, U)를 받아서 R 타입을 리턴하는 함수 인터페이스</li>
-  <li>T, U, R 모두 다른 타입이 들어올 수 있다</li>
-</ul>
+
+<blockquote>
+  <p><strong>BiFunction</strong>는 두 개의 값(T, U)를 받아서 R 타입을 리턴하는 함수 인터페이스</p>
+
+  <p>T, U, R 모두 다른 타입이 들어올 수 있다</p>
+</blockquote>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
@@ -267,10 +271,46 @@ result3 : 8
 
 <p><br /></p>
 
+<h3 id="suppliert">Supplier&lt;T&gt;</h3>
+
+<blockquote>
+  <p><strong>Supplier</strong> Fucntional Interface는 값을 생성하기 위해서 사용한다.</p>
+
+  <p><strong>Supplier&lt;T&gt;</strong>의 형태를 가지며 T는 반환 값의 타입이다.</p>
+</blockquote>
+
+<p>해당 Interface는 아래와 같습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
+
+<span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Supplier</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="no">T</span> <span class="nf">get</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>T get()</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+
+<span class="nc">Supplier</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">sumSupplier</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">num</span> <span class="o">+</span> <span class="mi">10</span><span class="o">;</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sumSupplier</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">15</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
 <h3 id="consumert">Consumer&lt;T&gt;</h3>
-<ul>
-  <li>T 타입을 받아서 아무값도 리턴하지 않는 함수 인터페이스</li>
-</ul>
+
+<blockquote>
+  <p><strong>Supplier</strong>와는 반대로 <strong>Consumer</strong> interface는 단일 파라미터를 받아들이고 아무런 리턴값이 없는 Functional Interface이다.</p>
+
+  <p><strong>Consumer&lt;T&gt;</strong>로 사용하며 T는 받는 단일 객체의 타입이다</p>
+</blockquote>
 
 <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
@@ -360,36 +400,8 @@ result3 : 8
 5
 </code></pre></div></div>
 
-<p><br /></p>
-
-<h3 id="suppliert">Supplier&lt;T&gt;</h3>
-<ul>
-  <li>T 타입의 값을 제공하는 함수 인터페이스</li>
-</ul>
-
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
-
-<span class="nd">@FunctionalInterface</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Supplier</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
-
-    <span class="no">T</span> <span class="nf">get</span><span class="o">();</span>
-<span class="o">}</span>
-</code></pre></div></div>
-
-<p><br /></p>
-
-<p>T get()</p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
-
-<span class="nc">Supplier</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">sumSupplier</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">num</span> <span class="o">+</span> <span class="mi">10</span><span class="o">;</span>
-
-<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sumSupplier</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
-</code></pre></div></div>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">15</span>
-</code></pre></div></div>
-
 <p><br />
-이번 포스팅에서는 <strong>Function과 Consumer, Supplier</strong>에 대해 알아보았다.</p>
+이번 포스팅에서는 <strong>Function과 Supplier, Consumer</strong>에 대해 알아보았다.</p>
 
 <p>원래는 Predicate와 Operator에 대해서도 같이 정리하려고 했는데 생각보다 내용이 많아 다음 포스팅에서 추가적으로 알아보자.</p>
 
