@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    함수형 인터페이스 종류(1) - GRYOH
+    
+  </title>
+
+  <meta name="description" content="함수형 인터페이스 종류(1)">
+
+  <!--<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>-->
+
+  <!-- 코드블럭 -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/java/2021/03/20/java8_04.html">
+  <link rel="alternate" type="application/rss+xml" title="GRYOH" href="/feed.xml">
+
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">GRYOH</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>-->
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">Posts</a>
+        </li>
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/posts/01.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>함수형 인터페이스 종류(1)</h1>
+            
+            <h2 class="subheading">Function, Consumer, Supplier</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">GRYOH</a>
+              on March 20, 2021 &middot; <span class="reading-time" title="Estimated read time">
+  
+   13 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto postsWrapper">
+
+        <h1 id="함수형-인터페이스-종류1">함수형 인터페이스 종류(1)</h1>
+
+<p>Java에서 기본적으로 제공해주는 함수형 인터페이스에 대해 공부해보려고 한다.</p>
+
+<p>함수형 인터페이스는 <strong>java.util.function</strong> 패키지 내에 존재하고 많은 함수형 인터페이스들이 있지만 그 중에 자주 사용하는 몇 가지만 공부해본다.</p>
+
+<p>(직접 java.util.function에 들어가보면 @FunctionalInterface 로 지정되있는 것을 확인 할 수 있다.)</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
+
+<span class="cm">/**
+ * Represents a function that accepts one argument and produces a result.
+ *
+ * &lt;p&gt;This is a &lt;a href="package-summary.html"&gt;functional interface&lt;/a&gt;
+ * whose functional method is {@link #apply(Object)}.
+ *
+ * @param &lt;T&gt; the type of the input to the function
+ * @param &lt;R&gt; the type of the result of the function
+ *
+ * @since 1.8
+ */</span>
+<span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Function</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">R</span><span class="o">&gt;</span> <span class="o">{</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="functiont-r">Function&lt;T, R&gt;</h4>
+
+<ul>
+  <li>T 타입을 받아서 R 타입을 리턴하는 함수 인터페이스</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>package java.util.function;
+
+import java.util.Objects;
+@FunctionalInterface
+public interface Function&lt;T, R&gt; {
+    R apply(T t);
+
+    default &lt;V&gt; Function&lt;V, R&gt; compose(Function&lt;? super V, ? extends T&gt; before) {
+        Objects.requireNonNull(before);
+        return (V v) -&gt; apply(before.apply(v));
+    }
+
+    default &lt;V&gt; Function&lt;T, V&gt; andThen(Function&lt;? super R, ? extends V&gt; after) {
+        Objects.requireNonNull(after);
+        return (T t) -&gt; after.apply(apply(t));
+    }
+
+    static &lt;T&gt; Function&lt;T, T&gt; identity() {
+        return t -&gt; t;
+    }
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>Function에 들어 있는 각 함수를 사용해 보겠습니다.</p>
+
+<p>apply()</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Function</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">sum10</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">10</span><span class="o">;</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"sum10 : "</span> <span class="o">+</span> <span class="n">sum10</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="k">new</span> <span class="nc">Integer</span><span class="o">(</span><span class="s">"4"</span><span class="o">)));</span> <span class="c1">// 실행 되는 시점</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sum10</span> <span class="o">:</span> <span class="mi">14</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>andThen()</p>
+<ul>
+  <li>함수 조합용 메소드</li>
+  <li>인터페이스A.andThen(인터페이스B) 는 A를 하고나면 B실행</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Function</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">sum10</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">10</span><span class="o">;</span>
+<span class="nc">Function</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">multi2</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="o">;</span>
+
+<span class="nc">Function</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">multi2</span><span class="o">.</span><span class="na">andThen</span><span class="o">(</span><span class="n">sum10</span><span class="o">);</span>  <span class="c1">// multi2 후 sum10를 하기로 정의</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"result : "</span> <span class="o">+</span> <span class="n">result</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="k">new</span> <span class="nc">Integer</span><span class="o">(</span><span class="s">"4"</span><span class="o">)));</span> <span class="c1">// 실행 되는 시점</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">:</span> <span class="mi">18</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>compose()</p>
+<ul>
+  <li>함수 조합용 메소드</li>
+  <li>인터페이스A.compose(인터페이스B) 는 A를 하기 전에 B실행</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Function</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">sum10</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">10</span><span class="o">;</span>
+<span class="nc">Function</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">multi2</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">2</span><span class="o">;</span>
+
+<span class="nc">Function</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">multi2</span><span class="o">.</span><span class="na">compose</span><span class="o">(</span><span class="n">sum10</span><span class="o">);</span> <span class="c1">// multi2를 하기 전에 sum10를 하기로 정의</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"result : "</span> <span class="o">+</span> <span class="n">result</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="k">new</span> <span class="nc">Integer</span><span class="o">(</span><span class="s">"4"</span><span class="o">)));</span> <span class="c1">// 실행 되는 시점</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result</span> <span class="o">:</span> <span class="mi">28</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>Function의 경우는 일반적으로 많이 사용하는 stream에 <strong>map</strong>에 해당한다.</p>
+
+<p>map의 내부로직은 다음과 같다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Returns a stream consisting of the results of applying the given
+ * function to the elements of this stream.
+ *
+ * &lt;p&gt;This is an &lt;a href="package-summary.html#StreamOps"&gt;intermediate
+ * operation&lt;/a&gt;.
+ *
+ * @param &lt;R&gt; The element type of the new stream
+ * @param mapper a &lt;a href="package-summary.html#NonInterference"&gt;non-interfering&lt;/a&gt;,
+ *               &lt;a href="package-summary.html#Statelessness"&gt;stateless&lt;/a&gt;
+ *               function to apply to each element
+ * @return the new stream
+ */</span>
+<span class="o">&lt;</span><span class="no">R</span><span class="o">&gt;</span> <span class="nc">Stream</span><span class="o">&lt;</span><span class="no">R</span><span class="o">&gt;</span> <span class="nf">map</span><span class="o">(</span><span class="nc">Function</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="no">T</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span> <span class="no">R</span><span class="o">&gt;</span> <span class="n">mapper</span><span class="o">);</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Function</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">stringMap</span> <span class="o">=</span> <span class="n">integer</span> <span class="o">-&gt;</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">integer</span><span class="o">);</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">integerStream</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">intToStringList</span> <span class="o">=</span> <span class="n">integerStream</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">stringMap</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"intToStringList = "</span> <span class="o">+</span> <span class="n">intToStringList</span><span class="o">);</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>intToStringList = [1, 2]
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="bifunctiont-u-r">BiFunction&lt;T, U, R&gt;</h3>
+<ul>
+  <li>두 개의 값(T, U)를 받아서 R 타입을 리턴하는 함수 인터페이스</li>
+  <li>T, U, R 모두 다른 타입이 들어올 수 있다</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
+
+<span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">BiFunction</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">U</span><span class="o">,</span> <span class="no">R</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="no">R</span> <span class="nf">apply</span><span class="o">(</span><span class="no">T</span> <span class="n">t</span><span class="o">,</span> <span class="no">U</span> <span class="n">u</span><span class="o">);</span>
+    
+    <span class="k">default</span> <span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="nc">BiFunction</span><span class="o">&lt;</span><span class="no">T</span><span class="o">,</span> <span class="no">U</span><span class="o">,</span> <span class="no">V</span><span class="o">&gt;</span> <span class="nf">andThen</span><span class="o">(</span><span class="nc">Function</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="no">R</span><span class="o">,</span> <span class="o">?</span> <span class="kd">extends</span> <span class="no">V</span><span class="o">&gt;</span> <span class="n">after</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">after</span><span class="o">);</span>
+        <span class="k">return</span> <span class="o">(</span><span class="no">T</span> <span class="n">t</span><span class="o">,</span> <span class="no">U</span> <span class="n">u</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">after</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">apply</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">u</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>사용 예제)</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">BiFunction</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">sum</span> <span class="o">=</span> <span class="o">(</span><span class="n">num1</span><span class="o">,</span> <span class="n">num2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">num1</span> <span class="o">+</span> <span class="n">num2</span><span class="o">;</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"result1 : "</span> <span class="o">+</span> <span class="n">sum</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="k">new</span> <span class="nc">Integer</span><span class="o">(</span><span class="mi">3</span><span class="o">),</span> <span class="k">new</span> <span class="nc">Integer</span><span class="o">(</span><span class="mi">5</span><span class="o">)));</span>
+
+<span class="nc">BiFunction</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">sumStringAndInteger</span> <span class="o">=</span> <span class="o">(</span><span class="n">str1</span><span class="o">,</span> <span class="n">num1</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">str1</span><span class="o">)</span> <span class="o">+</span> <span class="n">num1</span><span class="o">;</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"result2 : "</span> <span class="o">+</span> <span class="n">sumStringAndInteger</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s">"3"</span><span class="o">,</span> <span class="mi">5</span><span class="o">));</span>
+
+<span class="nc">BiFunction</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">,</span> <span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">sumStringToInteger</span> <span class="o">=</span> <span class="o">(</span><span class="n">str1</span><span class="o">,</span> <span class="n">str2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">str1</span><span class="o">)</span> <span class="o">+</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">str2</span><span class="o">);</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"result3 : "</span> <span class="o">+</span> <span class="n">sumStringToInteger</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="s">"3"</span><span class="o">,</span> <span class="s">"5"</span><span class="o">));</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>result1 : 8
+result2 : 8
+result3 : 8
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="consumert">Consumer&lt;T&gt;</h3>
+<ul>
+  <li>T 타입을 받아서 아무값도 리턴하지 않는 함수 인터페이스</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
+
+<span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">accept</span><span class="o">(</span><span class="no">T</span> <span class="n">t</span><span class="o">);</span>
+
+    <span class="k">default</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">andThen</span><span class="o">(</span><span class="nc">Consumer</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">after</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">after</span><span class="o">);</span>
+        <span class="k">return</span> <span class="o">(</span><span class="no">T</span> <span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="n">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span> <span class="n">after</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span> <span class="o">};</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>사용예제 )</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Consumer</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">consumer</span> <span class="o">=</span> <span class="o">(</span><span class="n">num</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"num : "</span> <span class="o">+</span> <span class="n">num</span><span class="o">);</span>
+<span class="n">consumer</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="mi">7</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>andThen()</p>
+<ul>
+  <li>함수 조합용 메소드</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Consumer</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">consumerA</span> <span class="o">=</span> <span class="o">(</span><span class="n">num</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"num : "</span> <span class="o">+</span> <span class="n">num</span><span class="o">);</span>
+<span class="nc">Consumer</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">consumerB</span> <span class="o">=</span> <span class="o">(</span><span class="n">num</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"num : "</span> <span class="o">+</span> <span class="n">num</span><span class="o">+</span><span class="mi">10</span><span class="o">);</span>
+
+<span class="nc">Consumer</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">consumerAafterB</span> <span class="o">=</span> <span class="n">consumerB</span><span class="o">.</span><span class="na">andThen</span><span class="o">(</span><span class="n">consumerA</span><span class="o">);</span>   <span class="c1">//B후에A실행</span>
+<span class="n">consumerAafterB</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">num</span> <span class="o">:</span> <span class="mi">15</span>
+<span class="n">num</span> <span class="o">:</span> <span class="mi">5</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>Consumer가 stream에서 대표적으로 사용 되는 곳은 <strong>forEach</strong>이다.</p>
+
+<p><strong>forEach</strong>의 내부 로직은 이렇다. Consumer라는 functional interface를 구현한 로직을 for 구문으로 실행하는 것이다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Performs the given action for each element of the {@code Iterable}
+ * until all elements have been processed or the action throws an
+ * exception.  Unless otherwise specified by the implementing class,
+ * actions are performed in the order of iteration (if an iteration order
+ * is specified).  Exceptions thrown by the action are relayed to the
+ * caller.
+ *
+ * @implSpec
+ * &lt;p&gt;The default implementation behaves as if:
+ * &lt;pre&gt;{@code
+ *     for (T t : this)
+ *         action.accept(t);
+ * }&lt;/pre&gt;
+ *
+ * @param action The action to be performed for each element
+ * @throws NullPointerException if the specified action is null
+ * @since 1.8
+ */</span>
+<span class="k">default</span> <span class="kt">void</span> <span class="nf">forEach</span><span class="o">(</span><span class="nc">Consumer</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="no">T</span> <span class="n">t</span> <span class="o">:</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">action</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">default</span> <span class="kt">void</span> <span class="nf">forEach</span><span class="o">(</span><span class="nc">Consumer</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">action</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Objects</span><span class="o">.</span><span class="na">requireNonNull</span><span class="o">(</span><span class="n">action</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="no">T</span> <span class="n">t</span> <span class="o">:</span> <span class="k">this</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">action</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>아래는 <strong>foreach</strong>와 Consumer를 사용한 예제이다 물론 실전에서는 람다로 바로 사용하는것을 추천한다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Consumer</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">consumer</span> <span class="o">=</span> <span class="n">num</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">num</span><span class="o">);</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">numList</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+<span class="n">numList</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">consumer</span><span class="o">);</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+2
+3
+4
+5
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="suppliert">Supplier&lt;T&gt;</h3>
+<ul>
+  <li>T 타입의 값을 제공하는 함수 인터페이스</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">java.util.function</span><span class="o">;</span>
+
+<span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Supplier</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="no">T</span> <span class="nf">get</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>T get()</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+
+<span class="nc">Supplier</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">sumSupplier</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">num</span> <span class="o">+</span> <span class="mi">10</span><span class="o">;</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">sumSupplier</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+</code></pre></div></div>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">15</span>
+</code></pre></div></div>
+
+<p><br />
+이번 포스팅에서는 <strong>Function과 Consumer, Supplier</strong>에 대해 알아보았다.</p>
+
+<p>원래는 Predicate와 Operator에 대해서도 같이 정리하려고 했는데 생각보다 내용이 많아 다음 포스팅에서 추가적으로 알아보자.</p>
+
+<hr />
+
+<p><br /></p>
+
+<p><a href="/java/2021/03/20/java8_05.html">함수형 인터페이스 종류(2) 보러가기</a></p>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/java/2021/02/26/java8_03.html" data-toggle="tooltip" data-placement="top" title="람다 표현식이란 무엇인가">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/java/2021/03/20/java8_05.html" data-toggle="tooltip" data-placement="top" title="함수형 인터페이스 종류(2)">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:hungry6459@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/gryoh">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; GRYOH 2021</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX-X');
+</script>
+
+
+
+</body>
+
+</html>

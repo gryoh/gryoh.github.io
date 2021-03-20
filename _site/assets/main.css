@@ -334,6 +334,36 @@ strong {
   background-color: #f9f2f4;
   border-radius: 4px; }
 
+table {
+  border-collapse: collapse;
+  text-align: center;
+  line-height: 1.5;
+  border-left: 1px solid #ccc; }
+
+table thead th {
+  padding: 10px;
+  font-weight: bold;
+  border-top: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 2px solid #c00;
+  background: #dcdcd1; }
+
+table tbody th {
+  width: 150px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  background: #ececec; }
+
+table td {
+  width: 350px;
+  padding: 10px;
+  vertical-align: center;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc; }
+
 @media (min-width: 1200px) {
   .container, .container-lg, .container-md, .container-sm {
     max-width: 1200px; } }

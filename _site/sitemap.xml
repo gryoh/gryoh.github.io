@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>http://localhost:4000/java/java8/2020/02/17/java8_01.html</loc>
-<lastmod>2020-02-17T13:00:00+09:00</lastmod>
+<loc>http://localhost:4000/java/2021/02/17/java8_01.html</loc>
+<lastmod>2021-02-17T13:00:00+09:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/java/java8/2020/02/26/java8_02.html</loc>
-<lastmod>2020-02-26T13:00:00+09:00</lastmod>
+<loc>http://localhost:4000/java/2021/02/26/java8_02.html</loc>
+<lastmod>2021-02-26T13:00:00+09:00</lastmod>
 </url>
 <url>
-<loc>http://localhost:4000/java/java8/2020/02/26/java8_03.html</loc>
-<lastmod>2020-02-26T13:00:00+09:00</lastmod>
+<loc>http://localhost:4000/java/2021/02/26/java8_03.html</loc>
+<lastmod>2021-02-26T13:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/java/2021/03/20/java8_04.html</loc>
+<lastmod>2021-03-20T15:00:00+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/java/2021/03/20/java8_05.html</loc>
+<lastmod>2021-03-20T18:00:00+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/about.html</loc>
