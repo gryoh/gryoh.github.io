@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    Java Stream 정리하기(1) - GRYOH
+    
+  </title>
+
+  <meta name="description" content="Java Stream">
+
+  <!--<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>-->
+
+  <!-- 코드블럭 -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/java/2021/03/21/java8_06.html">
+  <link rel="alternate" type="application/rss+xml" title="GRYOH" href="/feed.xml">
+
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">GRYOH</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>-->
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">Posts</a>
+        </li>
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/posts/01.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>Java Stream 정리하기(1)</h1>
+            
+            <h2 class="subheading">스트림 설명, 스트림 생성하기</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">GRYOH</a>
+              on March 21, 2021 &middot; <span class="reading-time" title="Estimated read time">
+  
+   9 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto postsWrapper">
+
+        <h1 id="java-stream">Java Stream</h1>
+
+<p>자바8에서 추가된 <strong>Stream</strong>은 람다를 활욜할 수 있는 기술 중 하나이다. 
+자바8 이전에는 배열이나 컬렉션에 있는 요소들을 다룰 때 <strong>for</strong>문을 사용하여 하나씩 꺼내서 사용했었다.
+단순한 로직인 경우에는 괜찮지만 코드가 길어지거나 복잡해질수록 여러 로직이 섞이고 다루기가 쉽지 않았다.</p>
+
+<p><br /></p>
+
+<p>예) java가 들어간 강좌의 갯수 출력</p>
+<ul>
+  <li>자바8 이전 버전 방식</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">classList</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"java"</span><span class="o">,</span> <span class="s">"spring framework"</span><span class="o">,</span> <span class="s">"spring jpa"</span><span class="o">,</span> <span class="s">"java8"</span><span class="o">);</span>
+<span class="kt">long</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+<span class="k">for</span><span class="o">(</span><span class="nc">String</span> <span class="n">className</span> <span class="o">:</span> <span class="n">classList</span><span class="o">){</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">className</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"java"</span><span class="o">)){</span>
+        <span class="n">count</span><span class="o">++;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"java가 들어간 강좌 갯수 : "</span> <span class="o">+</span> <span class="n">count</span><span class="o">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>자바8 이후 stream 사용 방식</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">classList</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"java"</span><span class="o">,</span> <span class="s">"spring framework"</span><span class="o">,</span> <span class="s">"spring jpa"</span><span class="o">,</span> <span class="s">"java8"</span><span class="o">);</span>
+
+<span class="kt">long</span> <span class="n">count</span> <span class="o">=</span> <span class="n">classList</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">filter</span><span class="o">(</span><span class="n">className</span> <span class="o">-&gt;</span> <span class="n">className</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"java"</span><span class="o">)).</span><span class="na">count</span><span class="o">();</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"java가 들어간 강좌 갯수 : "</span> <span class="o">+</span> <span class="n">count</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>훨씬 간결하고 익숙해진다면 가독성도 좋은 코드가 되었다. 
+자바8 이전 방식으로 사용하게 되면 classList에 저장요소에 하나씩 확인하기 위한 반복문(for)이 필요하고
+“java”를 찾기위한 분기문(if)이 필요하다. 반면, stream을 사용하면 한 줄로 작성이 가능하다. 문법만 안다면 직관적이고 간결한 코드가 된다.</p>
+
+<p><br /></p>
+
+<p>stream은 사전적 의미로 시내,흐르다,이어지다 라는 의미를 가지고 있다. 프로그래밍 언어에서는 <strong>데이터의 흐름</strong>을 의미한다.
+배열 또는 컬렉션 인스턴스에 여러 함수를 조합하여 원하는 결과를 가져올 수 있다.
+또한 사용하는 함수에서 <strong>람다표현식을 통해 간결하게 코드를 구현</strong>할 수 있다.
+즉, 배열과 컬렉션을 함수형으로 처리할 수 있다.</p>
+
+<p><br /></p>
+
+<p>또 다른 장점은 <strong>병렬처리(multi-threading)</strong>가 가능하다는 것이다. 
+따라서 쓰레드를 이용해 많은 요소들을 빠르게 처리할 수 있다.</p>
+
+<p><br /></p>
+
+<h3 id="스트림-특징">스트림 특징</h3>
+<ul>
+  <li>스트림은 데이터 소스를 <strong>변경하지 않는다.</strong></li>
+</ul>
+
+<blockquote>
+  <p>스트림은 데이터 소스로 부터 데이터를 읽기만할 뿐, 데이터 소스를 변경하지 않는다. 필요하다면, 정렬된 결과를 컬렉션이나 배열에 담아서 반환할 수 있다.</p>
+</blockquote>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">sortedList</span> <span class="o">=</span> <span class="n">listStream</span><span class="o">.</span><span class="na">sorted</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collections</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>스트림은 <strong>일회용</strong>이다.</li>
+</ul>
+
+<blockquote>
+  <p>스트림은 Iterator처럼 일회용이다. Iterator로 컬렉션의 요소를 모두 읽고 나면 다시 사용할 수 없는 것처럼, 스트림도 한번 사용하면 닫혀서 다시 사용할 수 없다. 필요하다면 스트림을 다시 생성해야한다.</p>
+</blockquote>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">listStream</span><span class="o">.</span><span class="na">sorted</span><span class="o">().</span><span class="na">limit</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+<span class="kt">int</span> <span class="n">elementCnt</span> <span class="o">=</span> <span class="n">listStream</span><span class="o">.</span><span class="na">count</span><span class="o">();</span> <span class="c1">//에러. 스트림이 이미 닫힘</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>스트림은 작업을 <strong>내부 반복</strong>으로 처리한다.</li>
+</ul>
+
+<blockquote>
+  <p>스트림을 이용한 작업이 간결할 수 있는 비결중의 하나가 바로 <strong>‘내부 반복’</strong>이다. 내부 반복이라는 것은 반복문을 메서드의 내부에 숨길 수 있다는 것을 의미한다.</p>
+</blockquote>
+
+<p><br /></p>
+
+<h3 id="스트림-사용설명">스트림 사용설명</h3>
+
+<p>스트림을 사용할 때에는 크게 3가지로 나뉜다</p>
+
+<blockquote>
+  <p>생성하기 &gt; 중간연산 &gt; 최종연산</p>
+
+  <p><strong>Collections같은 인스턴스.생성하기().중개연산().최종연산()</strong></p>
+</blockquote>
+
+<p><br /></p>
+
+<h4 id="생성하기스트림-인스턴스-생성">생성하기(스트림 인스턴스 생성)</h4>
+
+<h5 id="스트림-직접생성">*스트림 직접생성</h5>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"oh"</span><span class="o">,</span> <span class="s">"kim"</span><span class="o">);</span> 
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h5 id="배열-스트림">*배열 스트림</h5>
+<p>스트림을 이용하기 위해서는 먼저 배열생성을 해야한다.<br />
+배열은 다음과 같이 <strong>Arrays.stream()</strong> 메소드를 사용합니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">String</span><span class="o">[]</span> <span class="n">arr</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">[]{</span><span class="s">"oh"</span><span class="o">,</span> <span class="s">"kim"</span><span class="o">,</span> <span class="s">"lee"</span><span class="o">};</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">arr</span><span class="o">);</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">streamOfArrayPart</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">arr</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">stream</span><span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">()));</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">streamOfArrayPart</span><span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">()));</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[oh, kim, lee]
+[oh, kim]
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h5 id="컬렉션-스트림">*컬렉션 스트림</h5>
+<p>컬렉션 타입(Collection, List, Set)의 경우 인터페이스에 추가된 디폴트 메소드 <strong>stream()</strong> 을 이용해서 스트림을 만들 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="s">"oh"</span><span class="o">,</span> <span class="s">"kim"</span><span class="o">,</span> <span class="s">"lee"</span><span class="o">);</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">stream</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h5 id="streamiterate">*Stream.iterate()</h5>
+<p><strong>iterate</strong> 메소드를 이용하면 초기값과 해당 값을 다루는 람다를 이용해서 스트림에 들어갈 요소를 만든다.</p>
+
+<p>예제를 통해 알아보자. 아래 예제는 초기값 0, 해당값이 2씩 증가하여 5개까지 값을 만드는 에제이다. 
+(스트림의 사이즈가 무한하기 때문에 특정 사이즈로 제한해야한다)</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">iteratedStream</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">iterate</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">2</span><span class="o">).</span><span class="na">limit</span><span class="o">(</span><span class="mi">5</span><span class="o">);</span> <span class="c1">// [0, 2, 4, 6, 8]</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h5 id="병렬-스트림">*병렬 스트림</h5>
+<p>스트림 생성 시 사용하는 stream 대신 <strong>parallelStream</strong> 메소드를 사용해서 병렬 스트림을 쉽게 생성할 수 있다.
+내부적으로는 쓰레드를 처리하기 위해 자바 7부터 도입된 Fork/Join framework 를 사용한다.</p>
+
+<p>병렬 스트림 생성)</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Integer</span><span class="o">[]</span> <span class="nc">IntegerArr</span> <span class="o">=</span> <span class="o">{</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">};</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">nameList</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="nc">IntegerArr</span><span class="o">);</span>
+
+<span class="c1">// 리스트 병렬 스트림</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">parallelListStream</span> <span class="o">=</span> <span class="n">nameList</span><span class="o">.</span><span class="na">parallelStream</span><span class="o">();</span>
+
+<span class="c1">// 배열 병렬 스트림</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">parallelArrStream</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="nc">IntegerArr</span><span class="o">).</span><span class="na">parallel</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>병렬 스트림 여부 확인)</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">boolean</span> <span class="n">isParallel</span> <span class="o">=</span> <span class="n">parallelListStream</span><span class="o">.</span><span class="na">isParallel</span><span class="o">();</span> <span class="c1">//isParallel = true</span>
+</code></pre></div></div>
+
+<p>병렬 스트림 병렬작업 취소)</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">parallelStream</span><span class="o">.</span><span class="na">sequential</span><span class="o">();</span>
+<span class="n">isParallel</span> <span class="o">=</span> <span class="n">parallelStream</span><span class="o">.</span><span class="na">isParallel</span><span class="o">();</span> <span class="c1">//isParallel = false</span>
+</code></pre></div></div>
+
+<p>병렬처리 실행)</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">boolean</span> <span class="n">isOver150</span> <span class="o">=</span> <span class="n">parallelListStream</span><span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">integer</span> <span class="o">-&gt;</span> <span class="n">integer</span> <span class="o">*</span> <span class="mi">100</span><span class="o">)</span>
+                                      <span class="o">.</span><span class="na">anyMatch</span><span class="o">(</span><span class="n">integer</span> <span class="o">-&gt;</span> <span class="n">integer</span> <span class="o">&gt;</span> <span class="mi">150</span><span class="o">);</span> <span class="c1">//true</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h5 id="스트림-연결하여-생성하기">*스트림 연결하여 생성하기</h5>
+<p><strong>concat</strong> 메소드를 이용해 두 개의 <strong>스트림을 연결</strong>해서 새로운 스트림을 만들어낼 수 있습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream1</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"oh"</span><span class="o">,</span> <span class="s">"kim"</span><span class="o">);</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">stream2</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="s">"choi"</span><span class="o">,</span> <span class="s">"park"</span><span class="o">,</span> <span class="s">"lee"</span><span class="o">);</span>
+<span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">concat</span> <span class="o">=</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">concat</span><span class="o">(</span><span class="n">stream1</span><span class="o">,</span> <span class="n">stream2</span><span class="o">);</span>
+<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">concat</span><span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">()));</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[oh, kim, choi, park, lee]
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h5 id="기본형-스트림">*기본형 스트림</h5>
+
+<p>제네릭을 사용하면 리스트나 배열을 이용해서 기본 타입(int, long, double) 스트림을 생성할 수 있다.
+하지만 제네릭을 사용하지 않고 직접적으로 해당 타입의 스트림을 다룰 수도 있다.
+range 와 rangeClosed 는 범위의 차이이다.
+두 번째 인자인 종료지점이 포함되느냐 안되느냐의 차이이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">IntStream</span> <span class="n">intStream</span> <span class="o">=</span> <span class="nc">IntStream</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span> <span class="c1">// [1, 2, 3, 4]</span>
+<span class="nc">LongStream</span> <span class="n">longStream</span> <span class="o">=</span> <span class="nc">LongStream</span><span class="o">.</span><span class="na">rangeClosed</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span> <span class="c1">// [1, 2, 3, 4, 5]</span>
+</code></pre></div></div>
+
+<p>제네릭을 사용하지 않기 때문에 불필요한 <strong>오토박싱(auto-boxing)</strong>이 일어나지 않는다.
+필요한 경우 <strong>boxed</strong> 메소드를 이용해서 박싱(boxing)할 수 있다</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">boxedIntStream</span> <span class="o">=</span> <span class="nc">IntStream</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">5</span><span class="o">).</span><span class="na">boxed</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>Java 8 의 <strong>Random</strong> 클래스는 난수를 가지고 세 가지 타입의 스트림(IntStream, LongStream, DoubleStream)을 만들어낼 수 있다.
+쉽게 난수 스트림을 생성해서 여러가지 후속 작업을 취할 수 있어 유용하다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">DoubleStream</span> <span class="n">doubles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Random</span><span class="o">().</span><span class="na">doubles</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span> <span class="c1">// 난수 3개 생성</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<hr />
+
+<p>생각보다 내용이 많아 중간연산와 최종연산은 다음 포스팅에서 알아보자</p>
+
+<hr />
+
+<p><br /></p>
+
+<p><a href="/java/2021/03/21/java8_07.html">Java Stream 정리하기(2)</a></p>
+
+
+        <hr>
+
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/java/2021/03/20/java8_05.html" data-toggle="tooltip" data-placement="top" title="함수형 인터페이스 종류(2)">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/java/2021/03/21/java8_07.html" data-toggle="tooltip" data-placement="top" title="Java Stream 정리하기(2)">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:hungry6459@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/gryoh">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; GRYOH 2021</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX-X');
+</script>
+
+
+
+</body>
+
+</html>
