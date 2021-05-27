@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    Lombok 알아보기 - GRYOH
+    
+  </title>
+
+  <meta name="description" content="Lombok이란">
+
+  <!--<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>-->
+
+  <!-- 코드블럭 -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/web/2021/05/23/lombok_01.html">
+  <link rel="alternate" type="application/rss+xml" title="GRYOH" href="/feed.xml">
+
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">GRYOH</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>-->
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">Posts</a>
+        </li>
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/posts/01.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>Lombok 알아보기</h1>
+            
+            <h2 class="subheading">Lombok이란</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">GRYOH</a>
+              on May 23, 2021 &middot; <span class="reading-time" title="Estimated read time">
+  
+   18 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto postsWrapper">
+
+        <h2 id="lombok이란">Lombok이란</h2>
+
+<p><strong>Lombok(롬복)은 여러 어노테이션을 제공하는 라이브러리입니다</strong> Java로 개발할 때 반복되는 getter/setter 등의 반복을 줄여주는 <strong>코드 다이어트 라이브러리</strong>입니다.</p>
+
+<p>이를 기반으로 어노테이션을 사용하면 작성하는 소스 상엔 안보이지만 컴파일러 과정에서 컴파일된 결과물(.class)에는 getter,setter 등 생성됩니다.</p>
+
+<p><br /></p>
+
+<p>lombok사용 전과 후의 소스코드입니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.time.LocalDateTime</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Objects</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ProductModel</span><span class="o">(</span><span class="nc">String</span> <span class="n">productNo</span><span class="o">,</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">,</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">,</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">,</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">,</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productNo</span> <span class="o">=</span> <span class="n">productNo</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productName</span> <span class="o">=</span> <span class="n">productName</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productType</span> <span class="o">=</span> <span class="n">productType</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">deliveryType</span> <span class="o">=</span> <span class="n">deliveryType</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">stock</span> <span class="o">=</span> <span class="n">stock</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">regDttm</span> <span class="o">=</span> <span class="n">regDttm</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">modiDttm</span> <span class="o">=</span> <span class="n">modiDttm</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getProductNo</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setProductNo</span><span class="o">(</span><span class="nc">String</span> <span class="n">productNo</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productNo</span> <span class="o">=</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getProductName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setProductName</span><span class="o">(</span><span class="nc">String</span> <span class="n">productName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productName</span> <span class="o">=</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getProductType</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setProductType</span><span class="o">(</span><span class="nc">String</span> <span class="n">productType</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productType</span> <span class="o">=</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getDeliveryType</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDeliveryType</span><span class="o">(</span><span class="nc">String</span> <span class="n">deliveryType</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">deliveryType</span> <span class="o">=</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getStock</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setStock</span><span class="o">(</span><span class="kt">int</span> <span class="n">stock</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">stock</span> <span class="o">=</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">LocalDateTime</span> <span class="nf">getRegDttm</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRegDttm</span><span class="o">(</span><span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">regDttm</span> <span class="o">=</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">LocalDateTime</span> <span class="nf">getModiDttm</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">modiDttm</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setModiDttm</span><span class="o">(</span><span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">modiDttm</span> <span class="o">=</span> <span class="n">modiDttm</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">equals</span><span class="o">(</span><span class="nc">Object</span> <span class="n">o</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="k">this</span> <span class="o">==</span> <span class="n">o</span><span class="o">)</span> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">o</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">getClass</span><span class="o">()</span> <span class="o">!=</span> <span class="n">o</span><span class="o">.</span><span class="na">getClass</span><span class="o">())</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="nc">ProductModel</span> <span class="n">that</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ProductModel</span><span class="o">)</span> <span class="n">o</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">stock</span> <span class="o">==</span> <span class="n">that</span><span class="o">.</span><span class="na">stock</span> <span class="o">&amp;&amp;</span>
+                <span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">productNo</span><span class="o">,</span> <span class="n">that</span><span class="o">.</span><span class="na">productNo</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+                <span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">productName</span><span class="o">,</span> <span class="n">that</span><span class="o">.</span><span class="na">productName</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+                <span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">productType</span><span class="o">,</span> <span class="n">that</span><span class="o">.</span><span class="na">productType</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+                <span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">deliveryType</span><span class="o">,</span> <span class="n">that</span><span class="o">.</span><span class="na">deliveryType</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+                <span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">regDttm</span><span class="o">,</span> <span class="n">that</span><span class="o">.</span><span class="na">regDttm</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+                <span class="nc">Objects</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">modiDttm</span><span class="o">,</span> <span class="n">that</span><span class="o">.</span><span class="na">modiDttm</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">hashCode</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Objects</span><span class="o">.</span><span class="na">hash</span><span class="o">(</span><span class="n">productNo</span><span class="o">,</span> <span class="n">productName</span><span class="o">,</span> <span class="n">productType</span><span class="o">,</span> <span class="n">deliveryType</span><span class="o">,</span> <span class="n">stock</span><span class="o">,</span> <span class="n">regDttm</span><span class="o">,</span> <span class="n">modiDttm</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"ProductModel{"</span> <span class="o">+</span>
+                <span class="s">"productNo='"</span> <span class="o">+</span> <span class="n">productNo</span> <span class="o">+</span> <span class="sc">'\''</span> <span class="o">+</span>
+                <span class="s">", productName='"</span> <span class="o">+</span> <span class="n">productName</span> <span class="o">+</span> <span class="sc">'\''</span> <span class="o">+</span>
+                <span class="s">", productType='"</span> <span class="o">+</span> <span class="n">productType</span> <span class="o">+</span> <span class="sc">'\''</span> <span class="o">+</span>
+                <span class="s">", deliveryType='"</span> <span class="o">+</span> <span class="n">deliveryType</span> <span class="o">+</span> <span class="sc">'\''</span> <span class="o">+</span>
+                <span class="s">", stock="</span> <span class="o">+</span> <span class="n">stock</span> <span class="o">+</span>
+                <span class="s">", regDttm="</span> <span class="o">+</span> <span class="n">regDttm</span> <span class="o">+</span>
+                <span class="s">", modiDttm="</span> <span class="o">+</span> <span class="n">modiDttm</span> <span class="o">+</span>
+                <span class="sc">'}'</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">lombok.*</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.time.LocalDateTime</span><span class="o">;</span>
+
+<span class="nd">@Getter</span> 
+<span class="nd">@Setter</span> 
+<span class="nd">@ToString</span> 
+<span class="nd">@EqualsAndHashCode</span> 
+<span class="nd">@RequiredArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>확연히 코드가 줄어든 것을 볼 수 있습니다. annotation 5개가 부담스럽다면 <strong>@Data</strong>로 한번에 처리할 수 있습니다. 
+자세한 건 아래에서 더 다룰 예정입니다.</p>
+
+<p><br /></p>
+
+<h2 id="lombok의-장점과-주의사항">Lombok의 장점과 주의사항</h2>
+
+<p>장점</p>
+
+<ul>
+  <li><strong>어노테이션 기반의 코드</strong> 자동 생성을 통한 <strong>생산성</strong> 향상</li>
+  <li>반복되는 <strong>코드 다이어트</strong>를 통한 가독성 및 <strong>유지보수성</strong> 향상</li>
+  <li>Getter, Setter 외에 <strong>빌더 패턴</strong>이나 <strong>로그 생성</strong> 등 다양한 방면으로 활용 가능</li>
+</ul>
+
+<p><br /></p>
+
+<p>주의사항</p>
+<ul>
+  <li>모든 팀원이 lombok을 활용해야함(선지식 필요)</li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="lombok-세팅">Lombok 세팅</h2>
+<blockquote>
+  <p>1.lombok 다운&amp;설치 -&gt; 2.dependency추가 -&gt; 3.lombok사용</p>
+</blockquote>
+
+<p><br /></p>
+
+<h4 id="1-lombok-다운설치">1. lombok 다운&amp;설치</h4>
+
+<p>#eclipse나 sts를 사용하는 경우</p>
+<ul>
+  <li>lombok사이트<a href="https://projectlombok.org/download">(https://projectlombok.org/download)</a> 에서 다운로드 받아 설치하여 사용한다</li>
+</ul>
+
+<p>#intellij를 사용 하는 경우</p>
+<ul>
+  <li>marketplace에서 install한다.</li>
+</ul>
+
+<p><img data-action="zoom" src="/img/posts/marketplace_lombok.png" alt="마켓플레이스 롬복 다운로드" style="width: 100%; display: block; margin: 0 auto;" /></p>
+
+<p><br /></p>
+
+<h4 id="2-dependency추가">2. dependency추가</h4>
+
+<p>Maven 사용 - pom.xml에 추가</p>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- https://mvnrepository.com/artifact/org.projectlombok/lombok --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.18.4<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>Gradle 사용 - build.gradle에 추가</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// https://mvnrepository.com/artifact/org.projectlombok/lombok
+provided group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="3-lombok사용">3. lombok사용</h4>
+<p>intellij의 경우 아래와 같이 <strong>추가 설정</strong>을 해줘야합니다.</p>
+
+<p><img data-action="zoom" src="/img/posts/intellij_lombok_setting.png" alt="인텔리제이에서 롬복 세팅" style="width: 100%; display: block; margin: 0 auto;" /></p>
+
+<p><br /></p>
+
+<h3 id="annotation-종류와-설명">Annotation 종류와 설명</h3>
+
+<p>[ @Getter @Setter ]</p>
+
+<p>Lombok에서 가장 자주 활용하는 어노테이션입니다.
+@Getter와 @Setter를 클래스 이름 위에 적용시키면 모든 변수들에 적용이 가능하고, 변수 이름 위에 적용시키면 해당 변수들만 적용 가능합니다.</p>
+
+<p>@Getter와 @Setter를 활용한 예제는 아래와 같습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Getter</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="nd">@Setter</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>[ @AllArgsConstructor ]</p>
+
+<p>@AllArgsConstructor는 모든 변수를 사용하는 생성자를 자동완성 시켜주는 어노테이션입니다.</p>
+
+<p>@AllArgsConstructor를 활용한 예제는 아래와 같습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@AllArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+
+    <span class="cm">/* @AllArgsConstructor를 사용함으로써 아래 소스가 자동 생성됨
+    public ProductModel(String productNo, String productName, String productType, String deliveryType, int stock, LocalDateTime regDttm, LocalDateTime modiDttm) {
+        this.productNo = productNo;
+        this.productName = productName;
+        this.productType = productType;
+        this.deliveryType = deliveryType;
+        this.stock = stock;
+        this.regDttm = regDttm;
+        this.modiDttm = modiDttm;
+    }
+    */</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>[ @NoArgsConstructor ]</p>
+
+<p>@NoArgsConstructor는 어떠한 변수도 사용하지 않는 기본 생성자를 자동완성 시켜주는 어노테이션입니다.</p>
+
+<p>@NoArgsConstructor를 활용한 예제는 아래와 같습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@NoArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+    
+    <span class="cm">/* @NoArgsConstructor 사용함으로써 아래 소스가 자동 생성됨
+    public ProductModel(){
+        
+    }
+    */</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>[ @RequiredArgsConstructor ]</p>
+
+<p>@RequiredArgsConstructor는 특정 변수만을 활용하는 생성자를 자동완성 시켜주는 어노테이션입니다.
+생성자의 인자로 추가할 변수에 @NonNull 어노테이션을 붙여서 해당 변수를 생성자의 인자로 추가할 수 있습니다. 
+아니면 해당 변수를 final로 선언해도 의존성을 주입받을 수 있습니다.</p>
+
+<p>@RequiredArgsConstructor를 활용한 예제는 아래와 같습니다</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="nd">@NonNull</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+
+    <span class="o">/*</span> <span class="nd">@RequiredArgsConstructor</span> <span class="n">사용함으로써</span> <span class="n">아래</span> <span class="n">소스가</span> <span class="n">자동</span> <span class="n">생성됨</span>
+    <span class="kd">public</span> <span class="nf">ProductModel</span><span class="o">(</span><span class="nc">String</span> <span class="n">productNo</span><span class="o">,</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productNo</span> <span class="o">=</span> <span class="n">productNo</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productName</span> <span class="o">=</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>[ @EqualsAndHashCode ]</p>
+
+<p>@EqualsAndHashCode 어노테이션을 활용하면 클래스에 대한 equals 함수와 hashCode 함수를 자동으로 생성해줍니다.
+만약 서로 다른 두 객체에서 특정 변수의 이름이 똑같은 경우 같은 객체로 판단을 하고 싶다면 아래와 같이 해줄 수 있습니다.</p>
+
+<p>@EqualsAndHashCode를 활용한 예제는 아래와 같습니다</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@EqualsAndHashCode</span><span class="o">(</span><span class="n">of</span> <span class="o">=</span> <span class="o">{</span><span class="s">"productNo"</span><span class="o">,</span> <span class="s">"productName"</span><span class="o">},</span> <span class="n">callSuper</span> <span class="o">=</span> <span class="kc">false</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="nd">@NonNull</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+
+    <span class="nd">@NonNull</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+    
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">ProductModel</span> <span class="n">product1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ProductModel</span><span class="o">(</span><span class="s">"a111"</span><span class="o">,</span> <span class="s">"바나나"</span><span class="o">);</span>
+    <span class="nc">ProductModel</span> <span class="n">product2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ProductModel</span><span class="o">(</span><span class="s">"a111"</span><span class="o">,</span> <span class="s">"바나나"</span><span class="o">);</span>
+    <span class="nc">ProductModel</span> <span class="n">product3</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ProductModel</span><span class="o">(</span><span class="s">"a222"</span><span class="o">,</span> <span class="s">"바나나"</span><span class="o">);</span>
+
+    <span class="c1">// productNo과 productName이 모두 같기 때문에 같다고 판단</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">product1</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">product2</span><span class="o">));</span>  <span class="c1">//true</span>
+
+    <span class="c1">// productNo은 같지만 productName이 다르기 때문에 다르다고 판단</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">product1</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">product3</span><span class="o">));</span>  <span class="c1">//false</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>[ @ToString ]</p>
+
+<p>@ToString 어노테이션을 활용하면 클래스의 변수들을 기반으로 ToString 메소드를 자동으로 완성시켜 줍니다.
+출력을 원하지 않는 변수에 @ToString.Exclude 어노테이션을 붙여주면 출력을 제외할 수 있습니다.
+또한 상위 클래스에 대해도 toString을 적용시키고자 한다면 상위 클래스에 @ToString(callSuper = true) 를 적용시키면 됩니다.</p>
+
+<p>@ToString를 활용한 예제는 아래와 같습니다</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ToString</span>
+<span class="nd">@AllArgsConstructor</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+
+    <span class="nd">@ToString</span><span class="o">.</span><span class="na">Exclude</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">ProductModel</span> <span class="n">product</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ProductModel</span><span class="o">(</span><span class="s">"a111"</span><span class="o">,</span> <span class="s">"바나나"</span><span class="o">,</span> <span class="s">"일반상품"</span><span class="o">,</span> <span class="s">"일반택배"</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="nc">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">(),</span> <span class="nc">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">());</span>
+
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">product</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+    <span class="c1">//결과 : ProductModel(productNo=a111, productName=바나나, deliveryType=일반택배, stock=10, regDttm=2021-05-23T17:45:20.270, modiDttm=2021-05-23T17:45:20.271)</span>
+    <span class="c1">//@ToString.Exclude 된건 제외하고 출력</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>[ @Data ]</p>
+
+<p>@Data 어노테이션을 활용하면 @ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor를 자동완성 시켜줍니다.
+실무에서는 너무 무겁고 객체의 안정성을 지키기 때문에 @Data의 활용을 지양합니다.</p>
+
+<p><br /></p>
+
+<p>[ @Builder ]</p>
+
+<p>@Builder 어노테이션을 활용하면 해당 클래스의 객체의 생성에 Builder패턴을 적용시켜줍니다.
+모든 변수들에 대해 build하기를 원한다면 클래스 위에 @Builder를 붙이면 되지만, 특정 변수만을 build하기 원한다면 생성자를 작성하고 그 위에 @Builder 어노테이션을 붙여주면 됩니다.</p>
+
+<p>@Builder를 활용한 예제는 아래와 같습니다</p>
+
+<p>모든 변수에 적용예시</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Builder</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//ProductModel product = new ProductModel("a111", "바나나", "일반상품", "일반택배", 10, LocalDateTime.now(), LocalDateTime.now());</span>
+
+    <span class="nc">ProductModel</span> <span class="n">product</span> <span class="o">=</span> <span class="nc">ProductModel</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                                        <span class="o">.</span><span class="na">productNo</span><span class="o">(</span><span class="s">"a111"</span><span class="o">)</span>
+                                        <span class="o">.</span><span class="na">productName</span><span class="o">(</span><span class="s">"바나나"</span><span class="o">)</span>
+                                        <span class="o">.</span><span class="na">productType</span><span class="o">(</span><span class="s">"일반상품"</span><span class="o">)</span>
+                                        <span class="o">.</span><span class="na">deliveryType</span><span class="o">(</span><span class="s">"일반택배"</span><span class="o">)</span>
+                                        <span class="o">.</span><span class="na">stock</span><span class="o">(</span><span class="mi">10</span><span class="o">)</span>
+                                        <span class="o">.</span><span class="na">regDttm</span><span class="o">(</span><span class="nc">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">())</span>
+                                        <span class="o">.</span><span class="na">modiDttm</span><span class="o">(</span><span class="nc">LocalDateTime</span><span class="o">.</span><span class="na">now</span><span class="o">())</span>
+                                        <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>특정 변수에만 적용예시</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductModel</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productNo</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">productType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">deliveryType</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">stock</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">regDttm</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">LocalDateTime</span> <span class="n">modiDttm</span><span class="o">;</span>
+
+    <span class="nd">@Builder</span>
+    <span class="kd">public</span> <span class="nf">ProductModel</span><span class="o">(</span><span class="nc">String</span> <span class="n">productNo</span><span class="o">,</span> <span class="nc">String</span> <span class="n">productName</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productNo</span> <span class="o">=</span> <span class="n">productNo</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">productName</span> <span class="o">=</span> <span class="n">productName</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">ProductModel</span> <span class="n">product</span> <span class="o">=</span> <span class="nc">ProductModel</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                                        <span class="o">.</span><span class="na">productNo</span><span class="o">(</span><span class="s">"a111"</span><span class="o">)</span>
+                                        <span class="o">.</span><span class="na">productName</span><span class="o">(</span><span class="s">"바나나"</span><span class="o">)</span>
+                                        <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>[ @Log 관련 어노테이션 ]</p>
+
+<p>@Log4j2와 같은 어노테이션을 활용하면 해당 클래스의 로그 클래스를 자동 완성 시켜줍니다 
+@Log 관련 어노테이션을 활용한 예제는 아래와 같습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span> 
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/product"</span><span class="o">)</span> 
+<span class="nd">@Log4j2</span> 
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ProductController</span> <span class="o">{</span>
+    
+    <span class="nd">@GetMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/productList"</span><span class="o">)</span> 
+    <span class="kd">private</span> <span class="nc">ResponseEntity</span> <span class="nf">log</span><span class="o">(){</span> 
+        <span class="n">log</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"에러 발생"</span><span class="o">);</span> 
+        <span class="k">return</span> <span class="nc">ResponseEntity</span><span class="o">.</span><span class="na">ok</span><span class="o">().</span><span class="na">build</span><span class="o">();</span> 
+    <span class="o">}</span> 
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="결론">결론</h2>
+
+<p>Lombok은 많은 개발자들이 사용하고 시간 낭비를 줄여주는 정말 소중한 라이브러리이지만 그만큼 조심해야 될 부분도 많다. 
+Lombok이 어떻게 이런 고민을 해결하는지 살펴보고 실제로 사용해보면 좋을 것 같다!</p>
+
+
+        <hr>
+
+        <!-- post에 이전/이후 버튼 제거 -->
+        <!--
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/spring/jpa/2021/03/30/jpa_02.html" data-toggle="tooltip" data-placement="top" title="JPA이용하여 게시판 만들기(2)">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+          <a class="btn btn-primary float-right" href="/web/2021/05/24/redis_01.html" data-toggle="tooltip" data-placement="top" title="Redis 알아보기">Next<span class="d-none d-md-inline">
+              Post</span> &rarr;</a>
+          
+
+        </div>
+        -->
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:hungry6459@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/gryoh">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; GRYOH 2021</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX-X');
+</script>
+
+
+
+</body>
+
+</html>

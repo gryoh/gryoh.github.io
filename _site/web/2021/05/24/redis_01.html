@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>
+    Redis 알아보기 - GRYOH
+    
+  </title>
+
+  <meta name="description" content="Redis를 설명하기 전에 Cache에 대해 알아보겠습니다.">
+
+  <!--<link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>-->
+
+  <!-- 코드블럭 -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- -->
+
+  <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/assets/vendor/fontawesome-free/css/all.min.css">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/web/2021/05/24/redis_01.html">
+  <link rel="alternate" type="application/rss+xml" title="GRYOH" href="/feed.xml">
+
+</head>
+
+
+<body>
+
+  <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="/">GRYOH</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      Menu
+      <i class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>-->
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/posts">Posts</a>
+        </li>
+        <!--<li class="nav-item">
+          <a class="nav-link" href="/contact">Contact</a>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+  <!-- Page Header -->
+
+<header class="masthead" style="background-image: url('/img/posts/01.jpg')">
+  
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>Redis 알아보기</h1>
+            
+            <h2 class="subheading">Redis, Cache</h2>
+            
+            <span class="meta">Posted by
+              <a href="#">GRYOH</a>
+              on May 24, 2021 &middot; <span class="reading-time" title="Estimated read time">
+  
+   2 mins  read </span>
+
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto postsWrapper">
+
+        <p>Redis를 설명하기 전에 Cache에 대해 알아보겠습니다.</p>
+
+<p><br /></p>
+
+<h3 id="cache캐시">Cache(캐시)</h3>
+
+<p>웹 서비스는 대게 WEB-WAS-DB의 3티어 구조입니다.</p>
+
+<p>사용자가 많지 않을 때에는 이러한 3티어 구조로도 충분히 가능하지만 사용자가 많아지고 데이터가 커질수록 데이터베이스에 부하가 걸리기 시작합니다.
+데이터베이스를 이용하면 데이터를 영속적으로 관리할 수 있지만, 입출력에 다소 시간이 걸리기 때문에 실시간 서비스에서는 더 적합한 저장소를 사용할 필요가 있습니다.</p>
+
+<p>따라서 데이터베이스 혼자만의 부담을 줄이기 위해 캐시서버 도입을 검토하게 됩니다.</p>
+
+<blockquote>
+  <p>나중에 요청 올 결과를 어딘가 미리 저장해두었다가 빠르게 서비스를 해주는 것</p>
+</blockquote>
+
+<p>같은 요청이 여러번 들어오게되더라도 캐시서버에서 바로 결과값을 반환해주기 때문에 <strong>데이터베이스의 부담도 줄이고 서비스 개선</strong>도 됩니다.</p>
+
+<p><img data-action="zoom" src="/img/posts/cache_01.png" alt="캐시 도형 설명" style="width: 100%; display: block; margin: 0 auto;" /></p>
+
+<p><br /></p>
+
+<h3 id="redis레디스">Redis(레디스)</h3>
+
+<blockquote>
+  <p>Remote Dictionary Server의 약자로써, 키-값 구조의 비정형 데이터를 저장하고 관리하기 위한 오픈 소스 기반의 데이터 저장소입니다</p>
+</blockquote>
+
+<p>2009년 살바토르 산필리포(Salvatore Sanfilippo)가 처음 개발했으며, 2015년부터 Redis Labs가 지원하고 있습니다.
+Redis는 <strong>메모리 기반의 저장소</strong>이기 때문에 필요한 정보를 빠르게 저장하고 가져올 수 있는 실시간 서비스에 적합한 저장소입니다.
+모든 데이터를 메모리에 저장하기때문에 읽기와 쓰기 명령이 매우 빠릅니다.
+그런데 메모리는 <strong>휘발성</strong>이기 때문에 시스템이 꺼지면 모든 데이터가 날아가게 됩니다. 
+따라서 데이터를 지속적으로 유지하기 위해 모든 작업을 로그에 기록해서 디스크에 저장한 후, 
+시스템을 구동할 때 로그를 기반으로 데이터를 다시 메모리에 올리는 방식을 사용합니다. 
+따라서 전체 데이터를 영구히 저장하기보다는, 캐시처럼 휘발성이나 임시성 데이터를 저장하는 데 많이 사용됩니다.</p>
+
+<p><br /></p>
+
+<h3 id="redis-데이터-구조">Redis 데이터 구조</h3>
+
+<ol>
+  <li>
+    <p>String - 단순한 키-값 매핑 구조입니다. 
+일반적인 문자열로 최대 512Mbyte 길이까지 지원, Text 문자열뿐만 아니라 Integer와 같은 숫자나 JPEG와 같은 Binary 파일까지 저장 가능합니다.</p>
+  </li>
+  <li>
+    <p>Sets - 순서가 없는 Strings 데이터 집합입니다. Sets에서는 중복된 데이터는 하나로 처리하기 때문에, 중복에 대한 걱정을 할 필요가 없습니다.</p>
+  </li>
+  <li>
+    <p>Sorted Sets - 위의 Sets와 같은 구조이지만, Score(가중치)를 통해서 순서를 정할 수 있습니다. 
+Sorted Sets를 사용하면 Leaderboard와 같은 기능을 손쉽게 구현하실 수 있습니다. 데이터는 오름차순으로 내부 정렬</p>
+  </li>
+  <li>
+    <p>Lists - Array형식의 데이터구조입니다. List를 사용하면 처음과 끝에 데이터를 넣고 빼는 것은 속도가 빠르지만 중간에 데이터를 삽입할 때는 어려움이 있습니다.</p>
+  </li>
+  <li>
+    <p>Hashes - 키-값의 구조를 여러개 가진 object 타입을 저장하기 좋은 구조입니다.</p>
+  </li>
+</ol>
+
+
+
+        <hr>
+
+        <!-- post에 이전/이후 버튼 제거 -->
+        <!--
+        <div class="clearfix">
+
+          
+          <a class="btn btn-primary float-left" href="/web/2021/05/23/lombok_01.html" data-toggle="tooltip" data-placement="top" title="Lombok 알아보기">&larr; Previous<span class="d-none d-md-inline">
+              Post</span></a>
+          
+          
+
+        </div>
+        -->
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Footer -->
+
+<hr>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <ul class="list-inline text-center">
+          
+          <li class="list-inline-item">
+            <a href="mailto:hungry6459@gmail.com">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="far fa-envelope fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+          
+          
+          
+          <li class="list-inline-item">
+            <a href="https://github.com/gryoh">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+          
+        </ul>
+        <p class="copyright text-muted">Copyright &copy; GRYOH 2021</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/assets/vendor/jquery/jquery.min.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/startbootstrap-clean-blog/js/clean-blog.min.js"></script>
+
+<script src="/assets/scripts.js"></script>
+
+
+
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXXXXX-X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-XXXXXXXXX-X');
+</script>
+
+
+
+</body>
+
+</html>
